@@ -1,0 +1,28 @@
+spring:
+  application:
+    name: order-service
+
+server:
+  port: ${PORT:9003}
+  servlet:
+    context-path: /order
+
+eureka:
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    server:
+      waitTimeInMsWhenSyncEmpty: 0
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+
+opentracing:
+  jaeger:
+    udp-sender:
+      host: localhost
+      port: 6831
+    log-spans: true

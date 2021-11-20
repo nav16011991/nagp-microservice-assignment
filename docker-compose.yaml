@@ -1,0 +1,58 @@
+version: "3.9"
+networks:
+  microservice-ecommerce:
+
+services:
+  application-gateway:
+    image: "naveenbhardwaj/application-gateway:1.0.0"
+    environment:
+       - "SPRING_PROFILES_ACTIVE=prod"
+    networks:
+      - microservice-ecommerce
+    ports:
+      - 9000:9000
+
+  account-service:
+    image: "naveenbhardwaj/account-service:1.0.0"
+    environment:
+       - "SPRING_PROFILES_ACTIVE=prod"
+    networks:
+      - microservice-ecommerce
+    ports:
+      - 9001:9001
+
+  auth-service:
+    image: "naveenbhardwaj/auth-service:1.0.0"
+    environment:
+       - "SPRING_PROFILES_ACTIVE=prod"
+    networks:
+      - microservice-ecommerce
+    ports:
+      - 9002:9002
+
+  utility-service:
+    image: "naveenbhardwaj/utility-service:1.0.0"
+    environment:
+       - "SPRING_PROFILES_ACTIVE=prod"
+    networks:
+      - microservice-ecommerce
+    ports:
+      - 9003:9003
+  
+  provider-service:
+    image: "naveenbhardwaj/provider-service:1.0.0"
+    environment:
+       - "SPRING_PROFILES_ACTIVE=prod"
+    networks:
+      - microservice-ecommerce
+    ports:
+      - 9004:9004
+  
+  order-service:
+    image: "naveenbhardwaj/order-service:1.0.0"
+    environment:
+       - "SPRING_PROFILES_ACTIVE=prod"
+    networks:
+      - microservice-ecommerce
+    ports:
+      - 9005:9005

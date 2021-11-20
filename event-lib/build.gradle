@@ -1,0 +1,26 @@
+plugins {
+	id 'java'
+}
+
+apply plugin: 'maven-publish'
+apply plugin: 'maven'
+
+
+group = 'com.nagarro.nagp.core'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+repositories {
+	mavenLocal()
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.axonframework:axon-modelling:4.5'
+	compileOnly 'org.projectlombok:lombok:1.18.20'
+	annotationProcessor 'org.projectlombok:lombok:1.18.20'
+}
+
+test {
+	useJUnitPlatform()
+}

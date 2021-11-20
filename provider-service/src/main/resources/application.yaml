@@ -1,0 +1,28 @@
+spring:
+  application:
+    name: utility-service
+
+server:
+  port: ${PORT:9006}
+  servlet:
+    context-path: /product
+
+eureka:
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    server:
+      waitTimeInMsWhenSyncEmpty: 0
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+
+opentracing:
+  jaeger:
+    udp-sender:
+      host: localhost
+      port: 6831
+    log-spans: true
