@@ -1,7 +1,9 @@
 package com.nagarro.nagp.orderservice.gui;
 
+import com.nagarro.nagp.core.eventlib.commands.AddOrderContactCommand;
 import com.nagarro.nagp.core.eventlib.commands.ConfirmOrderCommand;
 import com.nagarro.nagp.core.eventlib.commands.CreateOrderCommand;
+import com.nagarro.nagp.orderservice.coreapi.model.request.OrderContactDTO;
 import com.nagarro.nagp.orderservice.coreapi.model.request.OrderRequestDTO;
 import com.nagarro.nagp.orderservice.coreapi.queries.FindAllOrderQuery;
 import com.nagarro.nagp.orderservice.coreapi.queries.FindOrderByLocationQuery;
@@ -37,7 +39,15 @@ public class OrderRestEndpoint {
         return commandGateway.send(new CreateOrderCommand(orderId, userId, orderRequestDTO.getUtilityId(), orderRequestDTO.getLocation()));
     }
 
-
+    @PostMapping("/{order-id}/contact")
+    public CompletableFuture<String> createOrder(@PathVariable("order-id") String orderId, @RequestBody OrderContactDTO orderContactDTO) {
+        return commandGateway.send(new AddOrderContactCommand(orderId,
+                orderContactDTO.getAddressLine(),
+                orderContactDTO.getCity(),
+                orderContactDTO.getState(),
+                orderContactDTO.getPinCode(),
+                orderContactDTO.getContactNumber()));
+    }
 
     @PostMapping("/{order-id}/confirm")
     public CompletableFuture<Void> confirmOrder(@PathVariable("order-id") String orderId) {

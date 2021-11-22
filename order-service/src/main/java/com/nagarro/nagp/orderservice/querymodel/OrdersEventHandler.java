@@ -1,11 +1,9 @@
 package com.nagarro.nagp.orderservice.querymodel;
 
 import com.nagarro.nagp.core.eventlib.events.OrderComfirmedEvent;
+import com.nagarro.nagp.core.eventlib.events.OrderContactAddedEvent;
 import com.nagarro.nagp.core.eventlib.events.OrderCreatedEvent;
-import com.nagarro.nagp.orderservice.coreapi.queries.FindAllOrderQuery;
-import com.nagarro.nagp.orderservice.coreapi.queries.FindOrderByLocationQuery;
-import com.nagarro.nagp.orderservice.coreapi.queries.FindOrderByUserQuery;
-import com.nagarro.nagp.orderservice.coreapi.queries.Order;
+import com.nagarro.nagp.orderservice.coreapi.queries.*;
 import org.axonframework.config.ProcessingGroup;
 import org.axonframework.eventhandling.EventHandler;
 import org.axonframework.queryhandling.QueryHandler;
@@ -33,6 +31,20 @@ public class OrdersEventHandler {
     public void on(OrderComfirmedEvent event) {
         orders.computeIfPresent(event.getOrderId(), (orderId, order) -> {
             order.setOrderConfirmed();
+            return order;
+        });
+    }
+
+    @EventHandler
+    public void on(OrderContactAddedEvent event) {
+        orders.computeIfPresent(event.getOrderId(), (orderId, order) -> {
+            order.setContactInformation(ContactInformation.builder()
+                    .addressLine(event.getAddressLine())
+                    .city(event.getCity())
+                    .state(event.getState())
+                    .pinCode(event.getPinCode())
+                    .contactNumber(event.getContactNumber())
+                    .build());
             return order;
         });
     }
